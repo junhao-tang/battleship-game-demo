@@ -86,6 +86,7 @@ abstract class Data {
   Data();
   Map<String, dynamic> toJson();
   factory Data.fromJson(CommunicationType type, Map<String, dynamic> json) {
+    // TODO  required improvement
     switch (type) {
       case CommunicationType.attack:
       case CommunicationType.attackResult:
