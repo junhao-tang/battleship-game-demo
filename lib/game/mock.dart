@@ -124,12 +124,12 @@ class MockServer<T> {
 
   void _handlePutRequest(String playerId, int index, int shipIndex) {
     if (_phase != Phase.position) return;
-    if (playersUsedShip[playerId]![index] != null) return; // ignored
+    if (playersUsedShip[playerId]![shipIndex] != null) return; // ignored
     Sea sea = playersSea[playerId]!;
     var ship = ships[shipIndex];
     if (sea.canPut(index, ship.width, ship.height)) {
       sea.put(index, ship.width, ship.height);
-      playersUsedShip[playerId]![index] = true;
+      playersUsedShip[playerId]![shipIndex] = true;
       _writeTo(Communication.put(index: index, shipIndex: shipIndex), playerId);
       _broadcast(Communication.enemyPut(shipIndex: shipIndex),
           except: playerId);
