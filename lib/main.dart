@@ -11,7 +11,7 @@ import 'game/game.dart';
 import 'util/random.dart';
 
 bool isSinglePlayer = true;
-String serverUri = "";
+String serverHost = "127.0.0.1";
 String playerId = generateId();
 
 void main() async {
@@ -23,7 +23,10 @@ void main() async {
     gameRef = Game(connectToMockServer(server, playerId: playerId));
     Ai(connectToMockServer(server, playerId: generateId()));
   } else {
-    var con = connectToSocket(serverUri, playerId: generateId());
+    var con = connectToSocket(
+      host: serverHost,
+      playerId: playerId,
+    );
     gameRef = Game(con);
   }
 

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
 
 import 'ship.dart';
@@ -53,13 +55,13 @@ class Communication {
 
   Communication.startGame({
     required List<Ship> ships,
-    required bool playerGoFirst,
+    required String startingPlayerId,
     required int width,
     required int height,
   })  : type = CommunicationType.startGame,
         data = StartGameData(
           ships: ships,
-          playerGoFirst: playerGoFirst,
+          startingPlayerId: startingPlayerId,
           width: width,
           height: height,
         );
@@ -70,14 +72,15 @@ class Communication {
 
   factory Communication.fromJson(Map<String, dynamic> json) {
     var type = $enumDecode(_$CommunicationTypeEnumMap, json["type"]);
-    var data = Data.fromJson(type, json["data"]);
+    var dataJson = jsonDecode(json['data']);
+    var data = Data.fromJson(type, dataJson);
     return Communication(type, data);
   }
 
   Map<String, dynamic> toJson() {
     return {
       "type": _$CommunicationTypeEnumMap[type],
-      "data": data.toJson(),
+      "data": jsonEncode(data.toJson()),
     };
   }
 }
@@ -153,14 +156,14 @@ class PlayerIdData extends Data {
 
 @JsonSerializable()
 class StartGameData extends Data {
-  final bool playerGoFirst;
+  final String startingPlayerId;
   final int width;
   final int height;
   final List<Ship> ships;
 
   StartGameData({
     required this.ships,
-    required this.playerGoFirst,
+    required this.startingPlayerId,
     required this.width,
     required this.height,
   });

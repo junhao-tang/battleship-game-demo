@@ -41,14 +41,14 @@ StartGameData _$StartGameDataFromJson(Map<String, dynamic> json) =>
       ships: (json['ships'] as List<dynamic>)
           .map((e) => Ship.fromJson(e as Map<String, dynamic>))
           .toList(),
-      playerGoFirst: json['playerGoFirst'] as bool,
+      startingPlayerId: json['startingPlayerId'] as String,
       width: json['width'] as int,
       height: json['height'] as int,
     );
 
 Map<String, dynamic> _$StartGameDataToJson(StartGameData instance) =>
     <String, dynamic>{
-      'playerGoFirst': instance.playerGoFirst,
+      'startingPlayerId': instance.startingPlayerId,
       'width': instance.width,
       'height': instance.height,
       'ships': instance.ships,

@@ -45,9 +45,10 @@ class MockServer<T> {
     var conn = playersConn[id]!;
 
     return ConnectionsWrapper<T>(
-      serializer,
-      conn.outSc.stream,
-      conn.inSc.sink,
+      serializer: serializer,
+      stream: conn.outSc.stream,
+      sink: conn.inSc.sink,
+      playerId: id,
     );
   }
 
@@ -99,7 +100,7 @@ class MockServer<T> {
       _writeTo(
         Communication.startGame(
           ships: ships,
-          playerGoFirst: id == participantsId.first,
+          startingPlayerId: participantsId.first,
           width: width,
           height: height,
         ),

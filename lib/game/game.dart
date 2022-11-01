@@ -30,7 +30,7 @@ class Game extends ChangeNotifier {
           case CommunicationType.startGame:
             var data = communication.data as StartGameData;
             _init(
-              playerFirst: data.playerGoFirst,
+              playerFirst: data.startingPlayerId == connections.playerId,
               ships: data.ships,
               width: data.width,
               height: data.height,
